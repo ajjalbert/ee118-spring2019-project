@@ -1,28 +1,32 @@
-clc;
-clear all;
-close all;
+%My confusion: understand the image as an input. How image provides Us and
+%Ur
 
-x=1:100;
 
-%Us and Ur contain information from the two rays intersecting 
+%Info: Us and Ur contain information from the two rays intersecting 
 %in the michelson interferometer. n(r) then takes the intensity. 
 %N(r) takes the "fourier" (not sure) and then we crop the circle 
 %we care about and center it. We then take the inverse fourier 
 %to collect the image information we want
 
-%define Us, Ur, I_r
-%Us=; beam info
-%Ur=; beam info that we can approximate
+%define I_r ------
 %I_r=;
-%j=;
 
-for r=length(x)
+y=imread('imwf');
+%y is a 1024 x 1270 matrix representing the image
+
+for i=length(y)
+    for r=length(y)
 Us(r)=y(r); %sample information
-Ur(r)=sqrt(I_r).*exp(-j*k*r); %reference beam
+Ur(r)=sqrt(I_r).*exp(-i*k*r); %reference beam ... -i referes to Forward Fourier Transform
+    end
 end
 
 E(r)=Us(r)+Ur(r);
 n(r)=abs(E(r)).^2; %measured intensity interferogram
 N(r)=Ir+abs(Us(r)).^2 + Us(r)*Ur(r) +  complex(Us(r)*Ur(r));
 % ambiguity + sample + complex conjugate
+
+Plot(N(r));
+
+
 
