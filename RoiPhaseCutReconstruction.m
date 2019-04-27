@@ -67,8 +67,8 @@ bckgdCenter = round(bckgdCirc.Center);
 [aPrime,bPrime,cPrime] = size(cellBckgd);
 
 % Find the distance to shift the masked image
-dMPrime = abs(bckgdCenter(1,1) - aPrime/2);
-dNPrime = abs(bckgdCenter(1,2) - bPrime/2);
+dMPrime = -(bckgdCenter(1,1) - aPrime/2);
+dNPrime = -(bckgdCenter(1,2) - bPrime/2);
 
 % Now shift the image by the required distance
 ZPShifted = circshift(ZPrime,[dMPrime dNPrime]);
