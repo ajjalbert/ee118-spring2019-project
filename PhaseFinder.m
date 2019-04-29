@@ -1,5 +1,5 @@
 % Load in the image
-picture=imread('im1.tiff');
+picture=imread('imwf.tif');
 
 % Do a 2D FFT of the image
 Y = fft2(picture);
@@ -48,37 +48,37 @@ colormap(gray);
 colorbar;
 
 % Load the background image
-bckgd=imread('im1_bkgd.tiff');
+bckgd=imread('imbkgd.tif');
 
 % Find the 2D fourier transform
 Z = fft2(bckgd);
 
 % Display the FFT. Need to shift the fft, get real values, and then log it
 % to exaggerate our picture.
-figure(2);
-imagesc(log(abs(fftshift(Z))));
-
-% Crop out the shape we want to use!
-bckgdCirc = drawcircle();
-zMask = createMask(bckgdCirc());
+% figure(2);
+% imagesc(log(abs(fftshift(Z))));
+% 
+% % Crop out the shape we want to use!
+% bckgdCirc = drawcircle();
+% zMask = createMask(bckgdCirc());
 
 % Use the cropped mask to modify our fourier image
 % This allows us to work with the data we want
-ZPrime = zMask.*(fftshift(Z));
+ZPrime = yMask.*(fftshift(Z));
 
-% Shift the modified image to the center
-% Get center of the circle
-bckgdCenter = round(bckgdCirc.Center);
-
-% Get size of our image
-[aPrime,bPrime,cPrime] = size(bckgd);
-
-% Find the distance to shift the masked image
-dMPrime = (aPrime/2) - bckgdCenter(1,1);
-dNPrime = (bPrime/2) - bckgdCenter(1,2);
+% % Shift the modified image to the center
+% % Get center of the circle
+% bckgdCenter = round(bckgdCirc.Center);
+% 
+% % Get size of our image
+% [aPrime,bPrime,cPrime] = size(bckgd);
+% 
+% % Find the distance to shift the masked image
+% dMPrime = (aPrime/2) - bckgdCenter(1,1);
+% dNPrime = (bPrime/2) - bckgdCenter(1,2);
 
 % Now shift the image by the required distance
-ZPShifted = circshift(ZPrime,[dMPrime dNPrime]);
+ZPShifted = circshift(ZPrime,[dM dN]);
 
 % Image to see where we shifted to!
 figure(419);
@@ -102,14 +102,15 @@ phase = angle(YFilt) - angle(ZFilt);
 
 % Image amplitude
 amp = abs(YFilt) - abs(ZFilt);
+
 pi = 3.14;
 % Now unwrap the unwanted phase lines from angle!
 % Hopefully the image is pretty now
-Q = unwrap(phase,pi);
+Q = unwrap(phase);
 
 % Congrats! We have done a fourier thing!
 figure(3);
-imagesc(log(abs(phase)));
+imagesc(Q);
 colormap(gray);
 colorbar;
 
