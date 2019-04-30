@@ -1,5 +1,5 @@
 % Load in the image
-picture=imread('im4.tiff');
+picture=imread('im5.tiff');
 
 % Do a 2D FFT of the image
 Y = fft2(picture);
@@ -9,6 +9,7 @@ figure(1);
 imagesc(log(abs(fftshift(Y))));
 
 % Crop out the circle we want!
+% And create crops for the smudges we want to delete!
 % This is a mask for our image
 frtCirc = drawcircle();
 smudgeCirc = drawcircle();
@@ -59,7 +60,7 @@ YFilt = ifft2(YPShifted);
 % colorbar;
 
 % Load the background image
-bckgd=imread('im4_bkgd.tiff');
+bckgd=imread('im5_bkgd.tiff');
 
 % Find the 2D fourier transform
 Z = fft2(bckgd);
@@ -122,11 +123,36 @@ Q = unwrapMainQual(phase);
 
 % Congrats! We have done a fourier thing!
 figure(3);
-imagesc(Q);
+imagesc(amp);
 colormap(gray);
 colorbar;
 
 figure(4);
-imagesc(amp);
+imagesc(Q);
 colormap(gray);
 colorbar;
+
+% Crop out two rectangles
+imageResult1 = imcrop();
+imageResult2 = imcrop();
+
+% Find the average value!!
+sum = 0;
+[xMax, yMax, ~] = size(imageResult1);
+for i = 1:xMax
+    for j = 1:yMax
+        sum = sum + imageResult1(i,j);
+    end 
+end
+averageResult1 = sum/(xMax + yMax);
+
+sum = 0;
+[xMax, yMax, zMax] = size(imageResult2);
+for i = 1:xMax
+    for j = 1:yMax
+        sum = sum + imageResult2(i,j);
+    end 
+end
+averageResult2 = sum/(xMax + yMax);
+
+phaseDifference = averageResult1 - averageResult2
