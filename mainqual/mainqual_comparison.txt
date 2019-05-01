@@ -1,0 +1,48 @@
+Comparison of MainQual programs, compiled in various ways:
+
+Relative speed is determined by running the same m-code on the DARPA machine with a 300x300 (90,000 element) phase image
+
+Best Order:
+mainqual64 > mainqual32_icl_4_2 > mainqual32_icl_4_1 > mainqual32_icl_3 > mainqual32 > mainqual
+
+**mainqual64.exe**
+Pros: Runs fastest of any compiled versions
+Cons: Only runs on 64-bit systems, also won't run on AMD Phenom X4 prcoessors as compiled
+Average Abs. Speed: 77.5 ms
+Average Rel. Speed: 1
+Compiled with: Intel Compiler, SSE 4.2
+
+**mainqual32.exe**
+Pros: Will run on Intel & AMD processors. Doesn't take ages to run.  Doesn't require 64-bit
+Cons: Not compiled with an optimized compiler. Not as fast as ICL-compiled executable.
+Average Abs. Speed: 137 ms
+Average Rel. Speed: 1.8
+Compiled with: MinGW
+
+**mainqual32_icl_3.exe**
+Pros: Doesn't need 64-bit. Runs as fast as 4.1.  Runs on my AMD processor
+Cons: 10% slower than icl 4.2 or mainqual64.  older than 4.1.
+Average Abs. Speed: 84.1
+Average Rel. Speed: 1.09
+Compiled with: Intel Compiler, SSE 3
+
+**mainqual32_icl_4_1.exe**
+Pros: Doesn't need 64-bit..  Runs on my AMD processor
+Cons: 10% slower than icl 4.2 or mainqual64
+Average Abs. Speed: 84.5ms
+Average Rel. Speed: 1.1
+Compiled with: Intel Compiler, SSE 4.1
+
+**mainqual32_icl_4_2.exe**
+Pros: Almost same exact speed as mainqual64, and doesn't need 64-bit.
+Cons: Won't run on AMD Phenom X4 prcoessors as compiled
+Average Abs. Speed: 78
+Average Rel. Speed: 1.01
+Compiled with: Intel Compiler, SSE 4.2
+
+**mainqual.exe**
+Pros: Written by someone else.  No possibilty of screwing up 
+Cons: Runs slowest of any compilations.  Uses ASCII read/write instead of binary.
+Average Abs. Speed: 1,017 ms
+Average Rel. Speed: 13.2
+Compiled with: Intel Compiler, SSE 4.2
